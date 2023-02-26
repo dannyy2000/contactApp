@@ -1,12 +1,34 @@
-package com.evoter.models;
+package com.evoter.entity;
+
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * @author showunmioludotun
+ */
+@Entity
+@Table(name = "parties")
 public class Party {
+
+    @Id
+    @SequenceGenerator(
+            name = "party_sequence",
+            sequenceName = "party_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "party_sequence"
+    )
+
     private Integer id;
     private String name;
     private String logo;
 
+    public Party() {
+
+    }
     public Party(Integer id, String name, String logo) {
         this.id = id;
         this.name = name;

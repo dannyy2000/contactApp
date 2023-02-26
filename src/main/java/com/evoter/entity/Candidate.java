@@ -1,9 +1,28 @@
-package com.evoter.models;
+package com.evoter.entity;
+
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * @author showunmioludotun
+ */
+@Entity
+@Table(name = "candidates")
 public class Candidate {
+
+    @Id
+    @SequenceGenerator(
+            name = "candidate_sequence",
+            sequenceName = "candidate_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "candidate_sequence"
+    )
+
     private Integer id;
     private Integer partyId;
     private Integer pollTypeId;
@@ -20,6 +39,10 @@ public class Candidate {
         this.sex = sex;
         this.age = age;
         this.createdAt = createdAt;
+    }
+
+    public Candidate() {
+
     }
 
     public Integer getId() {

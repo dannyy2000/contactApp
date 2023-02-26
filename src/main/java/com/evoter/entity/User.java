@@ -1,9 +1,26 @@
-package com.evoter.models;
+package com.evoter.entity;
+
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.Objects;
 
+
+@Entity
+@Table(name = "users")
 public class User {
+
+    @Id
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "user_sequence"
+    )
+
     private Integer id;
     private String name;
     private String sex;
@@ -11,11 +28,11 @@ public class User {
     private Integer nin;
     private String email;
     private String password;
-    private boolean isAdmin;
-    private boolean isSuperAdmin;
+    private boolean admin;
+    private boolean superAdmin;
     private Date createdAt;
 
-    public User(Integer id, String name, String sex, Integer age, Integer nin, String email, String password, boolean isAdmin, boolean isSuperAdmin, Date createdAt) {
+    public User(Integer id, String name, String sex, Integer age, Integer nin, String email, String password, boolean admin, boolean superAdmin, Date createdAt) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -23,9 +40,13 @@ public class User {
         this.nin = nin;
         this.email = email;
         this.password = password;
-        this.isAdmin = isAdmin;
-        this.isSuperAdmin = isSuperAdmin;
+        this.admin = admin;
+        this.superAdmin = superAdmin;
         this.createdAt = createdAt;
+    }
+
+    public User() {
+
     }
 
     public Integer getId() {
@@ -85,19 +106,19 @@ public class User {
     }
 
     public boolean isAdmin() {
-        return isAdmin;
+        return admin;
     }
 
     public void setAdmin(boolean admin) {
-        isAdmin = admin;
+        this.admin = admin;
     }
 
     public boolean isSuperAdmin() {
-        return isSuperAdmin;
+        return superAdmin;
     }
 
     public void setSuperAdmin(boolean superAdmin) {
-        isSuperAdmin = superAdmin;
+        this.superAdmin = superAdmin;
     }
 
     public Date getCreatedAt() {
@@ -113,12 +134,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return isAdmin == user.isAdmin && isSuperAdmin == user.isSuperAdmin && Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(sex, user.sex) && Objects.equals(age, user.age) && Objects.equals(nin, user.nin) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(createdAt, user.createdAt);
+        return admin == user.admin && superAdmin == user.superAdmin && Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(sex, user.sex) && Objects.equals(age, user.age) && Objects.equals(nin, user.nin) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(createdAt, user.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, sex, age, nin, email, password, isAdmin, isSuperAdmin, createdAt);
+        return Objects.hash(id, name, sex, age, nin, email, password, admin, superAdmin, createdAt);
     }
 
     @Override
@@ -131,8 +152,8 @@ public class User {
                 ", nin=" + nin +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", isAdmin=" + isAdmin +
-                ", isSuperAdmin=" + isSuperAdmin +
+                ", admin=" + admin +
+                ", superAdmin=" + superAdmin +
                 ", createdAt=" + createdAt +
                 '}';
     }
