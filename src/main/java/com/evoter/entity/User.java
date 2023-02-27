@@ -1,13 +1,26 @@
 package com.evoter.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
 import java.util.Objects;
 
 
 @Entity
-@Table(name = "users")
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "email_unique",
+                        columnNames = {"email"}
+                ),
+                @UniqueConstraint(
+                        name = "nin_unique",
+                        columnNames = {"nin"}
+                )
+        }
+)
 public class User {
 
     @Id
@@ -20,19 +33,52 @@ public class User {
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
-
-    private Integer id;
+    @Column(
+            name = "id",
+            updatable = false
+    )
+    private Long id;
+    @Column(
+            name = "name",
+            nullable = false
+    )
     private String name;
     private String sex;
+    @Column(
+            name = "age",
+            nullable = false
+    )
     private Integer age;
+    @Column(
+            name = "nin",
+            nullable = false
+    )
     private String nin;
+    @Column(
+            name = "email",
+            nullable = false
+    )
     private String email;
+    @Column(
+            name = "password",
+            nullable = false
+    )
     private String password;
     private boolean admin;
     private boolean superAdmin;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(
+            name = "created_at",
+            nullable = false
+    )
     private Date createdAt;
 
-    public User(Integer id, String name, String sex, Integer age, String nin, String email, String password, boolean admin, boolean superAdmin, Date createdAt) {
+    @PrePersist
+    private void onCreate() {
+        createdAt = new Date();
+    }
+
+    public User(Long id, String name, String sex, Integer age, String nin, String email, String password, boolean admin, boolean superAdmin, Date createdAt) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -49,11 +95,11 @@ public class User {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -131,8 +177,12 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
         return admin == user.admin && superAdmin == user.superAdmin && Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(sex, user.sex) && Objects.equals(age, user.age) && Objects.equals(nin, user.nin) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(createdAt, user.createdAt);
     }
