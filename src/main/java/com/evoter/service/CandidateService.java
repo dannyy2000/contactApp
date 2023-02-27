@@ -35,4 +35,8 @@ public class CandidateService {
     public Candidate getCandidateById(Long id) {
         return candidateRepository.findById(id).orElse(null);
     }
+
+    public void deleteCandidateById(Long id) {
+        candidateRepository.deleteById(id);
+    }
 }

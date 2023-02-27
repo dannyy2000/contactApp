@@ -61,4 +61,14 @@ public class CandidateController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/candidates/{candidateId}")
+    public ResponseEntity<Void> deleteCandidateById(@PathVariable("candidateId") Long id) {
+        try {
+            candidateService.deleteCandidateById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
