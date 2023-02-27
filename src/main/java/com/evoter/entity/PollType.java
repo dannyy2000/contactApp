@@ -8,7 +8,15 @@ import java.util.Objects;
  * @author showunmioludotun
  */
 @Entity
-@Table(name = "poll_types")
+@Table(
+        name = "poll_types",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "poll_type_name_unique",
+                        columnNames = {"name"}
+                )
+        }
+)
 public class PollType {
 
     @Id
@@ -22,7 +30,15 @@ public class PollType {
             generator = "poll_type_sequence"
     )
 
+    @Column(
+            name = "id",
+            updatable = false
+    )
     private Integer id;
+
+    @Column(
+        nullable = false
+    )
     private String name;
 
     public PollType(Integer id, String name) {
