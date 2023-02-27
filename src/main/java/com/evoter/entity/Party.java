@@ -34,7 +34,7 @@ public class Party {
         name = "id",
         updatable = false
     )
-    private Integer id;
+    private Long id;
 
     @Column(
         name = "name",
@@ -46,17 +46,17 @@ public class Party {
     public Party() {
 
     }
-    public Party(Integer id, String name, String logo) {
+    public Party(Long id, String name, String logo) {
         this.id = id;
         this.name = name;
         this.logo = logo;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -78,8 +78,12 @@ public class Party {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Party party = (Party) o;
         return Objects.equals(id, party.id) && Objects.equals(name, party.name) && Objects.equals(logo, party.logo);
     }
