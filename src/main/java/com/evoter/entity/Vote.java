@@ -23,13 +23,39 @@ public class Vote {
             generator = "vote_sequence"
     )
 
-    private Integer id;
-    private Integer userId;
+    @Column(
+            name = "id",
+            updatable = false
+    )
+    private Long id;
+
+    @Column(
+        nullable = false
+    )
+    private Long userId;
+
+    @Column(
+        nullable = false
+    )
     private Integer candidateId;
+
+    @Column(
+        nullable = false
+    )
     private Integer pollId;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(
+        nullable = false
+    )
     private Date createdAt;
 
-    public Vote(Integer id, Integer userId, Integer candidateId, Integer pollId, Date createdAt) {
+    @PrePersist
+    private void onCreate() {
+        createdAt = new Date();
+    }
+
+    public Vote(Long id, Long userId, Integer candidateId, Integer pollId, Date createdAt) {
         this.id = id;
         this.userId = userId;
         this.candidateId = candidateId;
@@ -41,19 +67,19 @@ public class Vote {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -83,8 +109,12 @@ public class Vote {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Vote vote = (Vote) o;
         return Objects.equals(id, vote.id) && Objects.equals(userId, vote.userId) && Objects.equals(candidateId, vote.candidateId) && Objects.equals(pollId, vote.pollId) && Objects.equals(createdAt, vote.createdAt);
     }
