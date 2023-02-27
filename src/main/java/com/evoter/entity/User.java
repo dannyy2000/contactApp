@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.Objects;
 
 
+/**
+ * @author showunmioludotun
+ */
 @Entity
 @Table(
         name = "users",

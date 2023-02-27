@@ -12,7 +12,7 @@ import java.util.Objects;
         name = "parties",
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name = "name_unique",
+                        name = "party_name_unique",
                         columnNames = {"name"}
                 )
         }

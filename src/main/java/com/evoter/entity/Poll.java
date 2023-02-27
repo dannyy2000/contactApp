@@ -14,7 +14,7 @@ import java.util.Objects;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "poll_type_unique",
-                        columnNames = {"poll_type_id"}
+                        columnNames = {"pollTypeId"}
                 )
         }
 )

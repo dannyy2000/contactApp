@@ -2,6 +2,7 @@ package com.evoter.controller;
 
 import com.evoter.entity.User;
 import com.evoter.request.AddUserRequest;
+import com.evoter.request.UpdateUserRequest;
 import com.evoter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,17 +25,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/users")
+    @PostMapping("/register")
     public ResponseEntity<User> addUser(@RequestBody AddUserRequest request) {
-        try {
-            User savedUser = userService.addUser(request);
-            if (savedUser == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+         try {
+             User savedUser = userService.addUser(request);
+             if (savedUser == null) {
+                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+             }
+             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+         } catch (Exception e) {
+             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+         }
     }
 
     @GetMapping("/users")
@@ -51,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable("userId") Integer id) {
+    public ResponseEntity<User> getUserById(@PathVariable("userId") Long id) {
         try {
             User user = userService.getUserById(id);
             if (user == null) {
@@ -62,4 +63,17 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+//    @PutMapping("/users/{userId}")
+//    public ResponseEntity<User> updateUser(@PathVariable("userId") Long id, @RequestBody UpdateUserRequest request) {
+//        try {
+//            User user = userService.updateUser(id, request);
+//            if (user == null) {
+//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//            }
+//            return new ResponseEntity<>(user, HttpStatus.OK);
+//        }catch (Exception e) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 }
