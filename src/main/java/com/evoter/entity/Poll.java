@@ -9,7 +9,15 @@ import java.util.Objects;
  * @author showunmioludotun
  */
 @Entity
-@Table(name = "polls")
+@Table(
+        name = "polls",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "poll_type_unique",
+                        columnNames = {"poll_type_id"}
+                )
+        }
+)
 public class Poll {
 
     @Id
@@ -23,16 +31,34 @@ public class Poll {
             generator = "poll_sequence"
     )
 
-    private Integer id;
+    @Column(
+            name = "id",
+            updatable = false
+    )
+    private Long id;
+
+    @Column(
+        nullable = false
+    )
     private Integer pollTypeId;
-    private Integer candidateId;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(
+        nullable = false
+    )
     private Date pollDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    public Poll(Integer id, Integer pollTypeId, Integer candidateId, Date pollDate, Date createdAt) {
+    @PrePersist
+    private void onCreate() {
+        createdAt = new Date();
+    }
+
+    public Poll(Long id, Integer pollTypeId, Date pollDate, Date createdAt) {
         this.id = id;
         this.pollTypeId = pollTypeId;
-        this.candidateId = candidateId;
         this.pollDate = pollDate;
         this.createdAt = createdAt;
     }
@@ -41,11 +67,11 @@ public class Poll {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,14 +81,6 @@ public class Poll {
 
     public void setPollTypeId(Integer pollTypeId) {
         this.pollTypeId = pollTypeId;
-    }
-
-    public Integer getCandidateId() {
-        return candidateId;
-    }
-
-    public void setCandidateId(Integer candidateId) {
-        this.candidateId = candidateId;
     }
 
     public Date getPollDate() {
@@ -83,15 +101,19 @@ public class Poll {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Poll poll = (Poll) o;
-        return Objects.equals(id, poll.id) && Objects.equals(pollTypeId, poll.pollTypeId) && Objects.equals(candidateId, poll.candidateId) && Objects.equals(pollDate, poll.pollDate) && Objects.equals(createdAt, poll.createdAt);
+        return Objects.equals(id, poll.id) && Objects.equals(pollTypeId, poll.pollTypeId) && Objects.equals(pollDate, poll.pollDate) && Objects.equals(createdAt, poll.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, pollTypeId, candidateId, pollDate, createdAt);
+        return Objects.hash(id, pollTypeId, pollDate, createdAt);
     }
 
     @Override
@@ -99,7 +121,6 @@ public class Poll {
         return "Poll{" +
                 "id=" + id +
                 ", pollTypeId=" + pollTypeId +
-                ", candidateId=" + candidateId +
                 ", pollDate=" + pollDate +
                 ", createdAt=" + createdAt +
                 '}';
