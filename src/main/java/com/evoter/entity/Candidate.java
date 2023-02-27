@@ -67,6 +67,7 @@ public class Candidate {
     )
     private Date createdAt;
 
+    @PrePersist
     private void onCreate() {
         createdAt = new Date();
     }
