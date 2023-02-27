@@ -23,15 +23,47 @@ public class Candidate {
             generator = "candidate_sequence"
     )
 
-    private Integer id;
+    @Column(
+            name = "id",
+            updatable = false
+    )
+    private Long id;
+
+    @Column(
+        name = "party_id",
+        nullable = false
+    )
     private Integer partyId;
+
+    @Column(
+        name = "poll_type_id",
+        nullable = false
+    )
     private Integer pollTypeId;
+
+    @Column(
+        name = "name",
+        nullable = false
+    )
     private String name;
     private String sex;
+
+    @Column(
+        nullable = false
+    )
     private Integer age;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(
+        nullable = false
+    )
     private Date createdAt;
 
-    public Candidate(Integer id, Integer partyId, Integer pollTypeId, String name, String sex, Integer age, Date createdAt) {
+    private void onCreate() {
+        createdAt = new Date();
+    }
+
+    public Candidate(Long id, Integer partyId, Integer pollTypeId, String name, String sex, Integer age, Date createdAt) {
         this.id = id;
         this.partyId = partyId;
         this.pollTypeId = pollTypeId;
@@ -45,11 +77,11 @@ public class Candidate {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -103,8 +135,12 @@ public class Candidate {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Candidate candidate = (Candidate) o;
         return Objects.equals(id, candidate.id) && Objects.equals(partyId, candidate.partyId) && Objects.equals(pollTypeId, candidate.pollTypeId) && Objects.equals(name, candidate.name) && Objects.equals(sex, candidate.sex) && Objects.equals(age, candidate.age) && Objects.equals(createdAt, candidate.createdAt);
     }
