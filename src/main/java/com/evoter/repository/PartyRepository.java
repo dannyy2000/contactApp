@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * @author showunmioludotun
  */
-public interface PartyRepositiory extends JpaRepository<Party, Integer> {
+public interface PartyRepository extends JpaRepository<Party, Long> {
 }
