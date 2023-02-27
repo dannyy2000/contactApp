@@ -25,14 +25,14 @@ public class User {
     private String name;
     private String sex;
     private Integer age;
-    private Integer nin;
+    private String nin;
     private String email;
     private String password;
     private boolean admin;
     private boolean superAdmin;
     private Date createdAt;
 
-    public User(Integer id, String name, String sex, Integer age, Integer nin, String email, String password, boolean admin, boolean superAdmin, Date createdAt) {
+    public User(Integer id, String name, String sex, Integer age, String nin, String email, String password, boolean admin, boolean superAdmin, Date createdAt) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -81,11 +81,11 @@ public class User {
         this.age = age;
     }
 
-    public Integer getNin() {
+    public String getNin() {
         return nin;
     }
 
-    public void setNin(Integer nin) {
+    public void setNin(String nin) {
         this.nin = nin;
     }
 
@@ -149,7 +149,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", sex='" + sex + '\'' +
                 ", age=" + age +
-                ", nin=" + nin +
+                ", nin='" + nin + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", admin=" + admin +
