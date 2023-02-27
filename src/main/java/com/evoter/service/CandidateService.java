@@ -5,6 +5,8 @@ import com.evoter.repository.CandidateRepository;
 import com.evoter.request.AddCandidateRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author showunmioludotun
  */
@@ -24,5 +26,9 @@ public class CandidateService {
         candidate.setAge(request.age());
         candidate.setSex(request.sex());
         return candidateRepository.save(candidate);
+    }
+
+    public List<Candidate> getAllCandidates() {
+        return candidateRepository.findAll();
     }
 }
