@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * @author showunmioludotun
  */
-public interface PollRepository extends JpaRepository<Poll, Integer> {
+public interface PollRepository extends JpaRepository<Poll, Long> {
 }
