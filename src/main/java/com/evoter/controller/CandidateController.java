@@ -48,4 +48,17 @@ public class CandidateController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/candidates/{candidateId}")
+    public ResponseEntity<Candidate> getCandidateById(@PathVariable("candidateId") Long id) {
+        try {
+            Candidate candidate = candidateService.getCandidateById(id);
+            if (candidate == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(candidate, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
