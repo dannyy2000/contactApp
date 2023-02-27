@@ -1,6 +1,7 @@
 package com.evoter.controller;
 
 import com.evoter.entity.User;
+import com.evoter.request.AddUserRequest;
 import com.evoter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,16 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> addUser(User user) {
-        User savedUser = userService.addUser(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    public ResponseEntity<User> addUser(@RequestBody AddUserRequest request) {
+        try {
+            User savedUser = userService.addUser(request);
+            if (savedUser == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/users")
