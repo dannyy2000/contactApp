@@ -9,7 +9,15 @@ import java.util.Objects;
  * @author showunmioludotun
  */
 @Entity
-@Table(name = "candidates")
+@Table(
+        name = "candidates",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "name_unique",
+                        columnNames = {"name"}
+                )
+        }
+)
 public class Candidate {
 
     @Id
