@@ -8,7 +8,15 @@ import java.util.Objects;
  * @author showunmioludotun
  */
 @Entity
-@Table(name = "parties")
+@Table(
+        name = "parties",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "name_unique",
+                        columnNames = {"name"}
+                )
+        }
+)
 public class Party {
 
     @Id
@@ -22,7 +30,16 @@ public class Party {
         generator = "party_sequence"
     )
 
+    @Column(
+        name = "id",
+        updatable = false
+    )
     private Integer id;
+
+    @Column(
+        name = "name",
+        nullable = false
+    )
     private String name;
     private String logo;
 
